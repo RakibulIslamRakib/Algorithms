@@ -18,6 +18,7 @@ void built(int node,int beginn,int endd){
     built(left,beginn,mid);
     built(right,mid+1,endd);
     tree[node]=tree[left]+tree[right];
+
 }
 
 void update(int node,int beginn,int endd,int index,int value){
@@ -34,24 +35,22 @@ void update(int node,int beginn,int endd,int index,int value){
     update(left,beginn,mid,index,value);
     update(right,mid+1,endd,index,value);
     tree[node]=tree[left]+tree[right];
+
 }
 
 
 int query(int node,int beginn,int endd,int begrange,int endrange){
-
-    if(begrange<beginn||endd<endrange||begrange>endd){
-        return 0;
-    }
-
-    if(beginn<=begrange && endd>=endrange){
+    if(begrange<=beginn && endd<=endrange){
         return tree[node];
     }
-
+    if(endrange<beginn||endd<begrange){
+        return 0;
+    }
     int left=node*2;
-    int right=node*2+1;
+    int right=(node*2)+1;
     int mid=(beginn+endd)/2;
     int qleft=query(left,beginn,mid,begrange,endrange);
-    int qright=query(left,beginn,mid,begrange,endrange);
+    int qright=query(right,mid+1,endd,begrange,endrange);
     return qleft+qright;
 }
 
@@ -65,6 +64,7 @@ int main(){
    built(1,1,array_size);
 
     int query_number;
+    cin>>query_number;
     for (int q=0;q<query_number;q++){
         int query_type;
         cin>>query_type;
@@ -77,8 +77,9 @@ int main(){
             int begrange,endrange;
             cin>>begrange>>endrange;
             int x=query(1,1,array_size,begrange,endrange);
-            cout<<x;
+            cout<<x<<endl;
         }
     }
 
 }
+
