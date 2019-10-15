@@ -32,7 +32,7 @@ tree[node].node=tree[left].node+tree[right].node;
 int query(int node,int beginn,int endd,int start_range,int end_range){
 if(start_range<beginn || end_range>endd || start_range>endd)
     return 0;
-if(start_range<=beginn && end_range<=endd)
+if(start_range<=beginn && end_range>=endd)
     return tree[node].node;
 int left=node*2;int right=left+1;
 int mid=(beginn+endd)/2;
