@@ -42,11 +42,11 @@ void update(int node,int beginn,int endd,int index1,int index2,int value_increas
 
 int query(int node,int beginn,int endd,int begrange,int endrange,int carry=0){
 
-    if(begrange<beginn||endd<endrange||begrange>endd){
+    if(endrange<beginn||endd<begrange){
         return 0;
     }
 
-    if(beginn<=begrange && endd<=endrange){
+    if(beginn>=begrange && endd<=endrange){
         return tree[node].sum+(endd-beginn+1)*carry;
 
     }
@@ -55,7 +55,7 @@ int query(int node,int beginn,int endd,int begrange,int endrange,int carry=0){
     int right=node*2+1;
     int mid=(beginn+endd)/2;
     int qleft=query(left,beginn,mid,begrange,endrange,carry+tree[node].prop);
-    int qright=query(left,mid+1,endd,begrange,endrange,carry+tree[node].prop);
+    int qright=query(right,mid+1,endd,begrange,endrange,carry+tree[node].prop);
     return qleft+qright;
 }
 
@@ -86,3 +86,4 @@ int main(){
     }
 
 }
+
