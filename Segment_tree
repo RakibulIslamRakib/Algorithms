@@ -1,10 +1,9 @@
 //here i have implement a segment tree for find the sum of an array within a given rangee
-
 #include<bits/stdc++.h>
 using namespace std;
 #define MAX 100001
 int arr[MAX];
-int tree[MAX*3];
+int tree[MAX*4];
 
 void built(int node,int beginn,int endd){
     if(beginn==endd){
@@ -20,11 +19,11 @@ void built(int node,int beginn,int endd){
 }
 int query(int node,int beginn,int endd,int begrange,int endrange){
 
-    if(begrange<beginn||endd<endrange||begrange>endd){
+    if(beginn>endrange||endd<begrange){
         return 0;
     }
 
-    if(beginn<=begrange && endd>=endrange){
+    if(beginn>=begrange&&endd<=endrange){
         return tree[node];
     }
 
@@ -32,7 +31,7 @@ int query(int node,int beginn,int endd,int begrange,int endrange){
     int right=node*2+1;
     int mid=(beginn+endd)/2;
     int qleft=query(left,beginn,mid,begrange,endrange);
-    int qright=query(left,beginn,mid,begrange,endrange);
+    int qright=query(right,mid+1,endd,begrange,endrange);
     return qleft+qright;
 }
 
@@ -51,3 +50,4 @@ int main(){
    cout<<x;
 
 }
+
